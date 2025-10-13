@@ -3,6 +3,7 @@ using Academico.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Academico.Migrations
 {
     [DbContext(typeof(EducacionalContext))]
-    partial class EducacionalContextModelSnapshot : ModelSnapshot
+    [Migration("20251006021135_aluno")]
+    partial class aluno
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,41 +47,6 @@ namespace Academico.Migrations
                     b.HasKey("AlunoID");
 
                     b.ToTable("Alunos");
-                });
-
-            modelBuilder.Entity("Academico.Models.AlunoAvaliacao", b =>
-                {
-                    b.Property<int>("AlunoID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AvaliacaoID")
-                        .HasColumnType("int");
-
-                    b.Property<float>("Nota")
-                        .HasColumnType("real");
-
-                    b.HasKey("AlunoID", "AvaliacaoID");
-
-                    b.HasIndex("AvaliacaoID");
-
-                    b.ToTable("AlunosAvaliacoes");
-                });
-
-            modelBuilder.Entity("Academico.Models.Avaliacao", b =>
-                {
-                    b.Property<int>("AvaliacaoID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AvaliacaoID"));
-
-                    b.Property<string>("Titulo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("AvaliacaoID");
-
-                    b.ToTable("Avaliacoes");
                 });
 
             modelBuilder.Entity("Academico.Models.Departamento", b =>
@@ -124,25 +92,6 @@ namespace Academico.Migrations
                     b.ToTable("Instituicoes");
                 });
 
-            modelBuilder.Entity("Academico.Models.AlunoAvaliacao", b =>
-                {
-                    b.HasOne("Academico.Models.Aluno", "Aluno")
-                        .WithMany("AlunosAvaliacoes")
-                        .HasForeignKey("AlunoID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Academico.Models.Avaliacao", "Avaliacao")
-                        .WithMany("AvaliacoesAlunos")
-                        .HasForeignKey("AvaliacaoID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Aluno");
-
-                    b.Navigation("Avaliacao");
-                });
-
             modelBuilder.Entity("Academico.Models.Departamento", b =>
                 {
                     b.HasOne("Academico.Models.Instituicao", "Instituicao")
@@ -152,16 +101,6 @@ namespace Academico.Migrations
                         .IsRequired();
 
                     b.Navigation("Instituicao");
-                });
-
-            modelBuilder.Entity("Academico.Models.Aluno", b =>
-                {
-                    b.Navigation("AlunosAvaliacoes");
-                });
-
-            modelBuilder.Entity("Academico.Models.Avaliacao", b =>
-                {
-                    b.Navigation("AvaliacoesAlunos");
                 });
 #pragma warning restore 612, 618
         }

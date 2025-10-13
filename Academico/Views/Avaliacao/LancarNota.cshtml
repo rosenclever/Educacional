@@ -1,0 +1,37 @@
+﻿@model Academico.Models.AvaliacaoAlunoViewModel
+
+@{
+    ViewData["Title"] = "Cadastrar Nota";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="SalvarNota" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="AlunoID" class="control-label">Aluno</label>
+        <select asp-for="AlunoId" asp-items="@Model.Alunos" class="form-control">
+            <option value="">Selecione um Aluno</option>
+        </select>
+        <span asp-validation-for="AlunoId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="AvaliacaoId" class="control-label">Avaliação</label>
+        <select asp-for="AvaliacaoId" asp-items="@Model.Avaliacoes" class="form-control">
+            <option value="">Selecione uma Avaliação</option>
+        </select>
+        <span asp-validation-for="AvaliacaoId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Nota" class="control-label">Nota</label>
+        <input asp-for="Nota" class="form-control" type="number" step="0.01" />
+        <span asp-validation-for="Nota" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Salvar Nota" class="btn btn-primary" />
+    </div>
+</form>

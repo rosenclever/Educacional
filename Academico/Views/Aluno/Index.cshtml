@@ -37,9 +37,9 @@
                 @Html.DisplayFor(modelItem => item.Cep)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new {  id=item.AlunoID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.AlunoID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.AlunoID })
+                <a asp-action="Edit" asp-route-id="@item.AlunoID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.AlunoID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.AlunoID">Delete</a>
             </td>
         </tr>
 }

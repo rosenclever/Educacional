@@ -10,23 +10,22 @@ using Academico.Models;
 
 namespace Academico.Controllers
 {
-    public class DepartamentoController : Controller
+    public class AvaliacaoController : Controller
     {
         private readonly EducacionalContext _context;
 
-        public DepartamentoController(EducacionalContext context)
+        public AvaliacaoController(EducacionalContext context)
         {
             _context = context;
         }
 
-        // GET: Departamento
+        // GET: Avaliacao
         public async Task<IActionResult> Index()
         {
-            var educacionalContext = _context.Departamentos.Include(d => d.Instituicao);
-            return View(await educacionalContext.ToListAsync());
+            return View(await _context.Avaliacoes.ToListAsync());
         }
 
-        // GET: Departamento/Details/5
+        // GET: Avaliacao/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,42 +33,39 @@ namespace Academico.Controllers
                 return NotFound();
             }
 
-            var departamento = await _context.Departamentos
-                .Include(d => d.Instituicao)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (departamento == null)
+            var avaliacao = await _context.Avaliacoes
+                .FirstOrDefaultAsync(m => m.AvaliacaoID == id);
+            if (avaliacao == null)
             {
                 return NotFound();
             }
 
-            return View(departamento);
+            return View(avaliacao);
         }
 
-        // GET: Departamento/Create
+        // GET: Avaliacao/Create
         public IActionResult Create()
         {
-            ViewData["InstituicaoID"] = new SelectList(_context.Instituicoes, "InstituicaoID", "Nome");
             return View();
         }
 
-        // POST: Departamento/Create
+        // POST: Avaliacao/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,InstituicaoID")] Departamento departamento)
+        public async Task<IActionResult> Create([Bind("AvaliacaoID,Titulo")] Avaliacao avaliacao)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(departamento);
+                _context.Add(avaliacao);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["InstituicaoID"] = new SelectList(_context.Instituicoes, "InstituicaoID", "Nome", departamento.InstituicaoID);
-            return View(departamento);
+            return View(avaliacao);
         }
 
-        // GET: Departamento/Edit/5
+        // GET: Avaliacao/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,23 +73,22 @@ namespace Academico.Controllers
                 return NotFound();
             }
 
-            var departamento = await _context.Departamentos.FindAsync(id);
-            if (departamento == null)
+            var avaliacao = await _context.Avaliacoes.FindAsync(id);
+            if (avaliacao == null)
             {
                 return NotFound();
             }
-            ViewData["InstituicaoID"] = new SelectList(_context.Instituicoes, "InstituicaoID", "Nome", departamento.InstituicaoID);
-            return View(departamento);
+            return View(avaliacao);
         }
 
-        // POST: Departamento/Edit/5
+        // POST: Avaliacao/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,InstituicaoID")] Departamento departamento)
+        public async Task<IActionResult> Edit(int id, [Bind("AvaliacaoID,Titulo")] Avaliacao avaliacao)
         {
-            if (id != departamento.Id)
+            if (id != avaliacao.AvaliacaoID)
             {
                 return NotFound();
             }
@@ -102,12 +97,12 @@ namespace Academico.Controllers
             {
                 try
                 {
-                    _context.Update(departamento);
+                    _context.Update(avaliacao);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!DepartamentoExists(departamento.Id))
+                    if (!AvaliacaoExists(avaliacao.AvaliacaoID))
                     {
                         return NotFound();
                     }
@@ -118,11 +113,10 @@ namespace Academico.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["InstituicaoID"] = new SelectList(_context.Instituicoes, "InstituicaoID", "Nome", departamento.InstituicaoID);
-            return View(departamento);
+            return View(avaliacao);
         }
 
-        // GET: Departamento/Delete/5
+        // GET: Avaliacao/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -130,35 +124,34 @@ namespace Academico.Controllers
                 return NotFound();
             }
 
-            var departamento = await _context.Departamentos
-                .Include(d => d.Instituicao)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (departamento == null)
+            var avaliacao = await _context.Avaliacoes
+                .FirstOrDefaultAsync(m => m.AvaliacaoID == id);
+            if (avaliacao == null)
             {
                 return NotFound();
             }
 
-            return View(departamento);
+            return View(avaliacao);
         }
 
-        // POST: Departamento/Delete/5
+        // POST: Avaliacao/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var departamento = await _context.Departamentos.FindAsync(id);
-            if (departamento != null)
+            var avaliacao = await _context.Avaliacoes.FindAsync(id);
+            if (avaliacao != null)
             {
-                _context.Departamentos.Remove(departamento);
+                _context.Avaliacoes.Remove(avaliacao);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool DepartamentoExists(int id)
+        private bool AvaliacaoExists(int id)
         {
-            return _context.Departamentos.Any(e => e.Id == id);
+            return _context.Avaliacoes.Any(e => e.AvaliacaoID == id);
         }
     }
 }

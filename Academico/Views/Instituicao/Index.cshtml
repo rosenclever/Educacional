@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<Academico.Models.Instituicao>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lista de Instituições";
 }
 
-<h1>Index</h1>
+<h1>Lista de Instituições</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Adicionar uma Instituição</a>
 </p>
 <table class="table">
     <thead>
@@ -31,9 +31,9 @@
                 @Html.DisplayFor(modelItem => item.Telefone)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.InstituicaoID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.InstituicaoID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.InstituicaoID">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.InstituicaoID">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.InstituicaoID">Detalhes</a> |
+                <a asp-action="Delete" asp-route-id="@item.InstituicaoID">Excluir</a>
             </td>
         </tr>
 }

@@ -11,12 +11,6 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AlunoID)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AlunoID)
-        </dd>
-        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Nome)
         </dt>
         <dd class = "col-sm-10">
@@ -34,9 +28,30 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Cep)
         </dd>
+        <dd class="col-sm-10">
+            <h1>Avaliações de @Model.Nome</h1>
+
+            @if (Model.AlunosAvaliacoes.Any())
+            {
+                <ul>
+                    @foreach (var avaliacao in Model.AlunosAvaliacoes)
+                    {
+                        <li>
+                            Avaliação: @avaliacao.Avaliacao.Titulo
+                            <br />
+                            Nota: @avaliacao.Nota
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p>Este aluno não possui avaliações.</p>
+            }
+        </dd>
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Edit" asp-route-id="@Model?.AlunoID">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

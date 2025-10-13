@@ -1,12 +1,12 @@
 ﻿@model Academico.Models.Instituicao
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Excluir Instituição";
 }
 
-<h1>Delete</h1>
+<h1>Exclusão</h1>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Tem certeza que deseja excluir esta Instiuição?</h3>
 <div>
     <h4>Instituicao</h4>
     <hr />
@@ -27,7 +27,7 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="InstituicaoID" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Excluir" class="btn btn-danger" /> |
+        <a asp-action="Index">Retornar para a lista de Instituições</a>
     </form>
 </div>
