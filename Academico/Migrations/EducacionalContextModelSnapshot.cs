@@ -43,7 +43,7 @@ namespace Academico.Migrations
 
                     b.HasKey("AlunoID");
 
-                    b.ToTable("Alunos");
+                    b.ToTable("Alunos", (string)null);
                 });
 
             modelBuilder.Entity("Academico.Models.AlunoAvaliacao", b =>
@@ -61,7 +61,7 @@ namespace Academico.Migrations
 
                     b.HasIndex("AvaliacaoID");
 
-                    b.ToTable("AlunosAvaliacoes");
+                    b.ToTable("AlunosAvaliacoes", (string)null);
                 });
 
             modelBuilder.Entity("Academico.Models.Avaliacao", b =>
@@ -78,7 +78,7 @@ namespace Academico.Migrations
 
                     b.HasKey("AvaliacaoID");
 
-                    b.ToTable("Avaliacoes");
+                    b.ToTable("Avaliacoes", (string)null);
                 });
 
             modelBuilder.Entity("Academico.Models.Departamento", b =>
@@ -100,7 +100,7 @@ namespace Academico.Migrations
 
                     b.HasIndex("InstituicaoID");
 
-                    b.ToTable("Departamentos");
+                    b.ToTable("Departamentos", (string)null);
                 });
 
             modelBuilder.Entity("Academico.Models.Instituicao", b =>
@@ -121,7 +121,7 @@ namespace Academico.Migrations
 
                     b.HasKey("InstituicaoID");
 
-                    b.ToTable("Instituicoes");
+                    b.ToTable("Instituicoes", (string)null);
                 });
 
             modelBuilder.Entity("Academico.Models.AlunoAvaliacao", b =>

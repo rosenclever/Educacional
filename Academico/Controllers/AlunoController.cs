@@ -154,7 +154,7 @@ namespace Academico.Controllers
 
         public IActionResult CadastrarNota()
         {
-            var viewModel = new AlunoAvaliacaoViewModel
+            var viewModel = new AvaliacaoAlunoViewModel
             {
                 Alunos = new SelectList(_context.Alunos, "AlunoId", "Nome"),
                 Avaliacoes = new SelectList(_context.Avaliacoes, "AvaliacaoId", "Titulo")
@@ -165,7 +165,7 @@ namespace Academico.Controllers
         // Método POST: Processa o formulário de cadastro/edição
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SalvarNota(AlunoAvaliacaoViewModel model)
+        public async Task<IActionResult> SalvarNota(AvaliacaoAlunoViewModel model)
         {
             // Validações básicas do modelo
             if (!ModelState.IsValid)
@@ -178,15 +178,15 @@ namespace Academico.Controllers
 
             // Tenta encontrar um relacionamento existente
             var alunoAvaliacao = await _context.AlunosAvaliacoes
-                .FirstOrDefaultAsync(aa => aa.AlunoId == model.AlunoId && aa.AvaliacaoId == model.AvaliacaoId);
+                .FirstOrDefaultAsync(aa => aa.AlunoID == model.AlunoId && aa.AvaliacaoID == model.AvaliacaoId);
 
             if (alunoAvaliacao == null)
             {
                 // Se o relacionamento NÃO existe, cria um novo
                 alunoAvaliacao = new AlunoAvaliacao
                 {
-                    AlunoId = model.AlunoId,
-                    AvaliacaoId = model.AvaliacaoId,
+                    AlunoID = model.AlunoId,
+                    AvaliacaoID = model.AvaliacaoId,
                     Nota = model.Nota
                 };
                 _context.AlunosAvaliacoes.Add(alunoAvaliacao);

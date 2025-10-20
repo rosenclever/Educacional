@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Academico.Data;
 using Academico.Models;
+using static Academico.Models.AvaliacaoAlunoViewModel;
 
 namespace Academico.Controllers
 {
@@ -147,6 +148,58 @@ namespace Academico.Controllers
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult LancarNota()
+        {
+            var Alunos = new SelectList(_context.Alunos, "AlunoId", "Nome");
+            var viewModel = new AvaliacaoAlunoViewModel
+            {
+                Alunos = new SelectList(_context.Alunos, "AlunoId", "Nome").ToList(),
+                Avaliacoes = new SelectList(_context.Avaliacoes, "AvaliacaoId", "Titulo")
+            };
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SalvarNota(AvaliacaoAlunoViewModel model)
+        {
+            // Validações básicas do modelo
+            if (!ModelState.IsValid)
+            {
+                // Recarrega as listas se houver erro de validação
+                model.Alunos = new SelectList(_context.Alunos, "AlunoId", "Nome");
+                model.Avaliacoes = new SelectList(_context.Avaliacoes, "AvaliacaoId", "Titulo");
+                return View("CadastrarNota", model);
+            }
+
+            // Tenta encontrar um relacionamento existente
+            var alunoAvaliacao = await _context.AlunosAvaliacoes
+                .FirstOrDefaultAsync(aa => aa.AlunoID == model.AlunoId && aa.AvaliacaoID == model.AvaliacaoId);
+
+            if (alunoAvaliacao == null)
+            {
+                // Se o relacionamento NÃO existe, cria um novo
+                alunoAvaliacao = new AlunoAvaliacao
+                {
+                    AlunoID = model.AlunoId,
+                    AvaliacaoID = model.AvaliacaoId,
+                    Nota = model.Nota
+                };
+                _context.AlunosAvaliacoes.Add(alunoAvaliacao);
+            }
+            else
+            {
+                // Se o relacionamento JÁ existe, atualiza a nota
+                alunoAvaliacao.Nota = model.Nota;
+                _context.AlunosAvaliacoes.Update(alunoAvaliacao);
+            }
+
+            await _context.SaveChangesAsync();
+
+            // Redireciona para uma página de sucesso, como a de detalhes do aluno
+            return RedirectToAction("DetalhesAluno", "Aluno", new { id = model.AlunoId });
         }
 
         private bool AvaliacaoExists(int id)
