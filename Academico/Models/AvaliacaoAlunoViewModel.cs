@@ -11,8 +11,8 @@ namespace Academico.Models
             public float Nota { get; set; }
 
             // Listas para popular os dropdowns na view
-            public SelectList Alunos { get; set; }
-            public SelectList Avaliacoes { get; set; }
+            public SelectList? Alunos { get; set; }
+            public SelectList? Avaliacoes { get; set; }
         
     }
 }

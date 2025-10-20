@@ -152,11 +152,11 @@ namespace Academico.Controllers
 
         public IActionResult LancarNota()
         {
-            var Alunos = new SelectList(_context.Alunos, "AlunoId", "Nome");
+            
             var viewModel = new AvaliacaoAlunoViewModel
             {
-                Alunos = new SelectList(_context.Alunos, "AlunoId", "Nome").ToList(),
-                Avaliacoes = new SelectList(_context.Avaliacoes, "AvaliacaoId", "Titulo")
+                Alunos = new SelectList(_context.Alunos, "AlunoID", "Nome"),
+                Avaliacoes = new SelectList(_context.Avaliacoes, "AvaliacaoID", "Titulo")
             };
             return View(viewModel);
         }
@@ -169,9 +169,9 @@ namespace Academico.Controllers
             if (!ModelState.IsValid)
             {
                 // Recarrega as listas se houver erro de validação
-                model.Alunos = new SelectList(_context.Alunos, "AlunoId", "Nome");
-                model.Avaliacoes = new SelectList(_context.Avaliacoes, "AvaliacaoId", "Titulo");
-                return View("CadastrarNota", model);
+                model.Alunos = new SelectList(_context.Alunos, "AlunoID", "Nome");
+                model.Avaliacoes = new SelectList(_context.Avaliacoes, "AvaliacaoID", "Titulo");
+                return View("LancarNota", model);
             }
 
             // Tenta encontrar um relacionamento existente
@@ -199,7 +199,7 @@ namespace Academico.Controllers
             await _context.SaveChangesAsync();
 
             // Redireciona para uma página de sucesso, como a de detalhes do aluno
-            return RedirectToAction("DetalhesAluno", "Aluno", new { id = model.AlunoId });
+            return RedirectToAction("Details", "Aluno", new { id = model.AlunoId });
         }
 
         private bool AvaliacaoExists(int id)
