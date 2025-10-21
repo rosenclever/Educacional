@@ -12,5 +12,6 @@ namespace Academico.Models
         [DisplayName("Departamento")]
         public int DepartamentoID { get; set; }
         public Departamento? Departamento { get; set; }
+        public List<Disciplina> Disciplinas { get; set; }
     }
 }
